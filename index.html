@@ -84,6 +84,23 @@
       margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
       color:var(--sub); font-size:13px;
     }
+    header{
+  　　　padding:48px 0 22px;
+  　　　border-bottom:1px solid var(--line);
+　　　}
+
+　　　.hero-wide{
+  　　　width:100vw;
+  　　　margin-left:calc(50% - 50vw);
+  　　　height:clamp(260px, 42vw, 520px);
+  　　　object-fit:cover;
+  　　　object-position:center 30%;
+  　　　border-radius:0;
+  　　　border-top:1px solid var(--line);
+  　　　border-bottom:1px solid var(--line);
+  　　　margin-top:18px;
+  　　　margin-bottom:16px;
+  　　 }
   </style>
 </head>
 <body>
@@ -92,7 +109,7 @@
       <div class="badge">yohaku-room / 余白の部屋</div>
 
       <!-- 画像はCSSじゃなくて、ここ（HTML）に置く -->
-      <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
+      <img class="hero-wide" src="hero.jpg" alt="余白の部屋の風景">
 
       <h1>余白の部屋。</h1>
       <p class="lead">
