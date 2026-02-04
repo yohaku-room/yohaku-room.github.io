@@ -4,9 +4,161 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>yohaku-room</title>
+  <meta name="description" content="余白の部屋。言葉とデザインと音楽の作業場。" />
+  <style>
+    :root{
+      --bg:#fafafa; --card:#ffffff; --text:#111; --sub:#555; --line:#e9e9e9;
+      --accent:#111;
+      --radius:18px;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.8;
+    }
+    a{color:inherit; text-decoration:none;}
+    .wrap{max-width:920px; margin:0 auto; padding:28px 18px 80px;}
+    header{
+      padding:48px 0 22px;
+      border-bottom:1px solid var(--line);
+    }
+    .badge{
+      display:inline-block; padding:6px 10px; border:1px solid var(--line);
+      border-radius:999px; font-size:12px; color:var(--sub); background:#fff;
+    }
+    h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
+    .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid var(--line); background:#fff;
+      font-size:14px;
+    }
+    .btn.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
+    .grid{display:grid; gap:14px; margin-top:26px;}
+    @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
+
+    .card{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius); padding:18px;
+    }
+    .card h2{margin:0 0 8px; font-size:18px;}
+    .muted{color:var(--sub); font-size:14px; margin:0;}
+    .list{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px;}
+    .item{
+      border:1px solid var(--line); border-radius:14px; padding:12px 12px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      background:#fff;
+    }
+    .item span{color:var(--sub); font-size:13px;}
+    .pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line); color:var(--sub); white-space:nowrap;
+    }
+    section{margin-top:18px;}
+    footer{
+      margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
+      color:var(--sub); font-size:13px;
+    }
+  </style>
 </head>
 <body>
-  <h1>yohaku-room</h1>
-  <p>余白の部屋。ゆっくり育てます。</p>
+  <div class="wrap">
+    <header>
+      <div class="badge">yohaku-room / 余白の部屋</div>
+      <h1>余白の部屋。</h1>
+      <p class="lead">
+        文章、デザイン、音楽。静かに作って、少しずつ公開していく場所。
+        ここは“自分のペース”を守るための、ちいさな拠点です。
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#" target="_blank" rel="noopener">note（あとでURL差し替え）</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">X（あとでURL差し替え）</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">Instagram（あとでURL差し替え）</a>
+        <a class="btn" href="#" target="_blank" rel="noopener">TikTok（あとでURL差し替え）</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>やっていること</h2>
+        <p class="muted">いまの想太の“手触り”を、そのまま置いていく。</p>
+        <ul class="list">
+          <li class="item">
+            <div>
+              <strong>本づくり（InDesign）</strong><br>
+              <span>装丁・組版・問い・余白。</span>
+            </div>
+            <div class="pill">Book</div>
+          </li>
+          <li class="item">
+            <div>
+              <strong>note（文章）</strong><br>
+              <span>日々の光を拾って、言葉にする。</span>
+            </div>
+            <div class="pill">Write</div>
+          </li>
+          <li class="item">
+            <div>
+              <strong>Instagram / TikTok（Illustrator）</strong><br>
+              <span>問いの言葉、静かなビジュアル。</span>
+            </div>
+            <div class="pill">Visual</div>
+          </li>
+          <li class="item">
+            <div>
+              <strong>動画編集（Premiere）</strong><br>
+              <span>動く余白、続ける記録。</span>
+            </div>
+            <div class="pill">Video</div>
+          </li>
+          <li class="item">
+            <div>
+              <strong>個人LP（GitHub）</strong><br>
+              <span>ここを“母艦”にする。</span>
+            </div>
+            <div class="pill">Web</div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>プロフィール</h2>
+        <p class="muted">
+          想太。編集／エッセイ／コピー／デザイン。<br>
+          “楽しい”を取り戻す途中。
+        </p>
+
+        <section style="margin-top:14px;">
+          <h2 style="margin:0 0 8px; font-size:18px;">いまの更新</h2>
+          <ul class="list">
+            <li class="item">
+              <div>
+                <strong>余白の部屋、開設</strong><br>
+                <span>2026-02-04</span>
+              </div>
+              <div class="pill">New</div>
+            </li>
+            <li class="item">
+              <div>
+                <strong>リンクを整える</strong><br>
+                <span>note / SNS / 作品ページ</span>
+              </div>
+              <div class="pill">Next</div>
+            </li>
+          </ul>
+        </section>
+      </section>
+    </div>
+
+    <footer>
+      <div>© yohaku-room</div>
+      <div>ゆっくり育てます。</div>
+    </footer>
+  </div>
 </body>
 </html>
