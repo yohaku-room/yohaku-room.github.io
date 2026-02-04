@@ -7,253 +7,193 @@
   <meta name="description" content="余白の部屋。言葉とデザインと音楽の作業場。" />
   <style>
     :root{
-      --bg:#0b0f14;
-      --card:rgba(255,255,255,.06);
-      --text:#f5f7fb;
-      --sub:rgba(245,247,251,.72);
-      --line:rgba(255,255,255,.12);
-      --accent:#f5f7fb;
-      --radius:18px;
+      --text:#1a1a1a;
+      --sub:rgba(0,0,0,.55);
+      --line:rgba(0,0,0,.10);
+      --paper:rgba(255,255,255,.78);
+      --paper-strong:rgba(255,255,255,.88);
+      --shadow: 0 18px 60px rgba(0,0,0,.10);
+      --radius:22px;
     }
     *{box-sizing:border-box;}
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
       color:var(--text);
-      background: linear-gradient(180deg, #ffd6a5 0%, #ff9aa2 35%, #b5bdfb 70%, #dbeafe 100%);
-      line-height:1.8;
-    }
-    a{color:inherit; text-decoration:none;}
-    .wrap{max-width:920px; margin:0 auto; padding:28px 18px 80px;}
-    header{
-      padding:48px 0 22px;
-      border-bottom:1px solid var(--line);
-    }
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:12px;
-      color:var(--sub);
-      background:transparent;
+      line-height:1.9;
+      min-height:100svh;
+      /* 背景（いまは夕焼け系） */
+      background: linear-gradient(180deg, #f6d6b4 0%, #f5a6a5 45%, #b7bdf6 100%);
     }
 
-    /* ここが“安全な画像表示” */
+    /* 背景にほんのりノイズ/霞感（任意） */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      background: radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,.35), rgba(255,255,255,0)),
+                  radial-gradient(900px 600px at 20% 110%, rgba(255,255,255,.25), rgba(255,255,255,0));
+      pointer-events:none;
+    }
+
+    a{color:inherit; text-decoration:none;}
+    .wrap{max-width:980px; margin:0 auto; padding:36px 18px 88px; position:relative;}
+
+    /* 名刺みたいな“面” */
+    .panel{
+      background: var(--paper);
+      border: 1px solid rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* ヒーロー画像 */
     .hero{
       width:100%;
-      height:clamp(240px, 38vw, 420px);
+      height:320px;
       object-fit:cover;
-      object-position:center 35%;
-      border-radius:18px;
-      border:1px solid var(--line);
-      margin:18px 0 16px;
       display:block;
     }
 
-    h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
-    .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
-    .cta-row{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:18px;
-　}
-　　@media(min-width:720px){
-  　.cta-row{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-　　}
+    .inner{
+      padding:28px 26px 30px;
+      text-align:center;
+    }
+
+    .name{
+      font-size:40px;
+      letter-spacing:.02em;
+      margin:4px 0 6px;
+    }
+    .sub{
+      color:var(--sub);
+      margin:0 0 18px;
+      font-size:15px;
+    }
+
+    .divider{
+      width:160px;
+      height:1px;
+      background:rgba(0,0,0,.08);
+      margin:16px auto 18px;
+    }
+
+    /* SNSボタン：崩れない横並び */
+    .links{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
     .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:9px 14px;     /* ちょい小さく */
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.10);
-  font-size:13px;       /* ちょい小さく */
-  line-height:1;
-  white-space:nowrap;
-}
-.btn.primary{
-  background:#fff;
-  color:#0b0f14;
-  border-color:#fff;
-}
-    .btn.sns-tiktok{
-  　　border-color: rgba(255,215,0,.70) !important;
-  　　background: rgba(255,215,0,.14) !important;
-　　　}
-    .grid{display:grid; gap:14px; margin-top:26px;}
-    @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
-
-    .card{
-      background:var(--card); border:1px solid var(--line);
-      border-radius:var(--radius); padding:18px;
-      backdrop-filter: blur(6px);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:14px;
+      border:1px solid rgba(0,0,0,.14);
+      background: rgba(255,255,255,.55);
+      transition:.15s ease;
+      white-space:nowrap;
+      min-width: 132px; /* ここでサイズを揃える */
     }
-    .card h2{margin:0 0 8px; font-size:18px;}
-    .muted{color:var(--sub); font-size:14px; margin:0;}
-    .list{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px;}
-    .item{
-      border:1px solid var(--line); border-radius:14px; padding:12px 12px;
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      background:rgba(255,255,255,.04);
+    .btn:hover{ transform: translateY(-1px); }
+
+    /* note：白抜き＋黒文字（想太の希望） */
+    .btn.note{
+      background: rgba(255,255,255,.92);
+      border-color: rgba(0,0,0,.18);
+      color:#111;
     }
-    .item span{color:var(--sub); font-size:13px;}
-    .pill{
-      font-size:12px; padding:6px 10px; border-radius:999px;
-      border:1px solid var(--line); color:var(--sub); white-space:nowrap;
-      background:rgba(255,255,255,.03);
+
+    /* X：黒ベース */
+    .btn.x{
+      background: rgba(0,0,0,.72);
+      border-color: rgba(0,0,0,.0);
+      color:#fff;
     }
-    section{margin-top:18px;}
-    footer{
-      margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
-      color:var(--sub); font-size:13px;
+
+    /* Instagram：グラデ感（控えめ） */
+    .btn.ig{
+      background: linear-gradient(90deg, rgba(255,214,0,.35), rgba(255,0,105,.30), rgba(0,178,255,.28));
+      border-color: rgba(255,0,105,.28);
+      color:#111;
     }
-    /* SNSボタン色（上品ver：枠＋うっすら背景） */
-　　　.btn.sns-note{
-  　　border-color: rgba(255,255,255,.20);
-  　　background: rgba(255,255,255,.10);
-　　　}
 
-　　　.btn.sns-x{
-  　　　border-color: rgba(255,255,255,.20);
-  　　　background: rgba(255,255,255,.06);
-　　　　}
+    /* TikTok：黄色（想太の希望） */
+    .btn.tt{
+      background: rgba(255, 216, 0, .75);
+      border-color: rgba(0,0,0,.12);
+      color:#111;
+    }
 
-　　　.btn.sns-instagram{
-  　　border-color: rgba(225,48,108,.55);
-  　　background: rgba(225,48,108,.12);
-　　　}
+    /* 下に“縦スクロールの続き”を置けるように */
+    .below{
+      margin-top:18px;
+      padding:18px;
+      background: rgba(255,255,255,.45);
+      border:1px solid rgba(255,255,255,.55);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 14px 50px rgba(0,0,0,.08);
+    }
 
-　　　.btn.sns-tiktok{
-  　　border-color: rgba(37,244,238,.55);
-  　　background: rgba(37,244,238,.10);
-　　　}
+    .h2{
+      margin:0 0 10px;
+      font-size:18px;
+      letter-spacing:.04em;
+      color: rgba(0,0,0,.78);
+    }
+    .p{margin:0; color: rgba(0,0,0,.62); font-size:14px;}
 
-　　　/* ふわっと光らせる（任意だけど気持ちいい） */
-　　　.btn.sns-instagram:hover,
-　　　.btn.sns-tiktok:hover{
-  　　filter: brightness(1.05);
-　　　}
-    .btn.sns-instagram{
- 　　 border-color: rgba(255,255,255,.18);
-  　　background: linear-gradient(135deg, rgba(245,133,41,.22), rgba(221,42,123,.22), rgba(129,52,175,.22));
-　　　}
-    /* SNS色（強制反映ver） */
-.btn.sns-note{
-  border-color: rgba(255,255,255,.22) !important;
-  background: rgba(255,255,255,.10) !important;
-}
-.btn.sns-x{
-  border-color: rgba(255,255,255,.18) !important;
-  background: rgba(255,255,255,.06) !important;
-}
-.btn.sns-instagram{
-  border-color: rgba(225,48,108,.60) !important;
-  background: rgba(225,48,108,.14) !important;
-}
-.btn.sns-tiktok{
-  border-color: rgba(37,244,238,.60) !important;
-  background: rgba(37,244,238,.12) !important;
-}
+    @media (max-width:560px){
+      .hero{ height:240px; }
+      .name{ font-size:34px; }
+      .btn{ min-width: 46%; } /* スマホは2列で整列 */
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <div class="badge">yohaku-room / 余白の部屋</div>
 
+    <section class="panel">
+      <!-- 画像ファイル名は repo に置いたものに合わせてね（例: hero.jpg） -->
       <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
 
-      <h1>余白の部屋</h1>
-      <p class="lead">
-        生きることは、楽しむこと。<br>
-        文章、デザイン、音楽。静かな創作の世界へようこそ。
-      </p>
-      <div class="cta-row">
-        <a class="btn primary sns-note" href="https://note.com/s_mi_on_0607" target="_blank" rel="noopener">note</a>
-　　　　　<a class="btn sns-x" href="#" target="_blank" rel="noopener">X（あとでURL差し替え）</a>
-　　　　　<a class="btn sns-instagram" href="https://www.instagram.com/k_yama_sou?igsh=MTV1M3luOTA2eHppOA%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
-　　　　　<a class="btn sns-tiktok" href="http://www.tiktok.com/@souta.yamazaki" target="_blank" rel="noopener">TikTok</a>
+      <div class="inner">
+        <div class="sub">yohaku-room / 余白の部屋</div>
+
+        <h1 class="name">想太 <span style="font-weight:500;">Sota</span></h1>
+
+        <p class="sub">
+          生きることは、楽しむこと。<br>
+          文章、デザイン、音楽。静かな創作の世界へようこそ。
+        </p>
+
+        <div class="divider"></div>
+
+        <!-- ▼▼ ここにURLを入れる ▼▼ -->
+        <div class="links">
+          <a class="btn note" href="https://note.com/s_mi_on_0607" target="_blank" rel="noopener">note</a>
+          <a class="btn x"    href="https://x.com/@yamazaki0173" target="_blank" rel="noopener">X</a>
+          <a class="btn ig"   href="https://www.instagram.com/k_yama_sou" target="_blank" rel="noopener">Instagram</a>
+          <a class="btn tt"   href="http://www.tiktok.com/@souta.yamazaki" target="_blank" rel="noopener">TikTok</a>
+        </div>
+        <!-- ▲▲ ここにURLを入れる ▲▲ -->
       </div>
-    </header>
+    </section>
 
-    <div class="grid">
-      <section class="card">
-        <h2>ぼくの創作</h2>
-        <p class="muted">やりたいこと、ただ、楽しむだけ</p>
-        <ul class="list">
-          <li class="item">
-            <div>
-              <strong>本づくり（InDesign）</strong><br>
-              <span>装丁・組版・問い・余白。</span>
-            </div>
-            <div class="pill">Book</div>
-          </li>
-          <li class="item">
-            <div>
-              <strong>文章作成（ライティング）</strong><br>
-              <span>日々の光を拾って、言葉にする。</span>
-            </div>
-            <div class="pill">Write</div>
-          </li>
-          <li class="item">
-            <div>
-              <strong>Instagram / TikTok（Illustrator）</strong><br>
-              <span>問いの言葉、静かなビジュアル。</span>
-            </div>
-            <div class="pill">Visual</div>
-          </li>
-          <li class="item">
-            <div>
-              <strong>動画編集（Premiere）</strong><br>
-              <span>心が動く、映像作品を。</span>
-            </div>
-            <div class="pill">Video</div>
-          </li>
-          <li class="item">
-            <div>
-              <strong>個人LP（GitHub）</strong><br>
-              <span>ここは僕の静かな“居場所”</span>
-            </div>
-            <div class="pill">Web</div>
-          </li>
-        </ul>
-      </section>
+    <!-- 下は明日以降の“縦スクロールの続き”置き場（今は仮） -->
+    <section class="below">
+      <div class="h2">この場所について</div>
+      <p class="p">ゆっくり育てます。焦らず、でも止まらず。</p>
+    </section>
 
-      <section class="card">
-        <h2>プロフィール</h2>
-        <p class="muted">
-          やまざき想太。<br>
-          言葉が好き／編集者／作家／作詞家／宗教3世／出版チーム『余白者』所属</p>
-
-        <section style="margin-top:14px;">
-          <h2 style="margin:0 0 8px; font-size:18px;">いまの更新</h2>
-          <ul class="list">
-            <li class="item">
-              <div>
-                <strong>余白の部屋、開設</strong><br>
-                <span>2026-02-04</span>
-              </div>
-              <div class="pill">New</div>
-            </li>
-            <li class="item">
-              <div>
-                <strong>リンクを整える</strong><br>
-                <span>note / SNS / 作品ページ</span>
-              </div>
-              <div class="pill">Next</div>
-            </li>
-          </ul>
-        </section>
-      </section>
-    </div>
-
-    <footer>
-      <div>© yohaku-room</div>
-      <div>ゆっくり育てます。</div>
-    </footer>
   </div>
 </body>
 </html>
