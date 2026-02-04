@@ -22,11 +22,11 @@
       color:var(--text);
       line-height:1.9;
       min-height:100svh;
-      /* 背景（いまは夕焼け系） */
+      /* 背景（夕焼け系） */
       background: linear-gradient(180deg, #f6d6b4 0%, #f5a6a5 45%, #b7bdf6 100%);
     }
 
-    /* 背景にほんのりノイズ/霞感（任意） */
+    /* 背景にほんのり霞感 */
     body:before{
       content:"";
       position:fixed; inset:0;
@@ -99,11 +99,11 @@
       background: rgba(255,255,255,.55);
       transition:.15s ease;
       white-space:nowrap;
-      min-width: 132px; /* ここでサイズを揃える */
+      min-width: 132px; /* サイズを揃える */
     }
     .btn:hover{ transform: translateY(-1px); }
 
-    /* note：白抜き＋黒文字（想太の希望） */
+    /* note：白抜き＋黒文字 */
     .btn.note{
       background: rgba(255,255,255,.92);
       border-color: rgba(0,0,0,.18);
@@ -117,21 +117,21 @@
       color:#fff;
     }
 
-    /* Instagram：グラデ感（控えめ） */
+    /* Instagram：控えめグラデ */
     .btn.ig{
       background: linear-gradient(90deg, rgba(255,214,0,.35), rgba(255,0,105,.30), rgba(0,178,255,.28));
       border-color: rgba(255,0,105,.28);
       color:#111;
     }
 
-    /* TikTok：黄色（想太の希望） */
+    /* TikTok：黄色 */
     .btn.tt{
       background: rgba(255, 216, 0, .75);
       border-color: rgba(0,0,0,.12);
       color:#111;
     }
 
-    /* 下に“縦スクロールの続き”を置けるように */
+    /* 下に“縦スクロールの続き” */
     .below{
       margin-top:18px;
       padding:18px;
@@ -151,6 +151,88 @@
     }
     .p{margin:0; color: rgba(0,0,0,.62); font-size:14px;}
 
+    /* ▼▼ 追加：縦スクロール用の増築パーツ（デザインは崩さない） ▼▼ */
+    .stack{ margin-top:18px; display:grid; gap:14px; }
+    .stack .below{ margin-top:0; } /* stack内の余白はstackが管理 */
+
+    .kicker{
+      display:inline-block;
+      font-size:12px;
+      letter-spacing:.10em;
+      color: rgba(0,0,0,.50);
+      margin-bottom:6px;
+    }
+
+    .cards{ margin-top:12px; display:grid; gap:10px; }
+
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 12px;
+      border-radius:16px;
+      background: rgba(255,255,255,.55);
+      border:1px solid rgba(0,0,0,.10);
+    }
+    .row .title{ font-weight:700; }
+    .row .desc{ color: rgba(0,0,0,.62); font-size:13px; margin-top:2px; }
+
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.55);
+      color: rgba(0,0,0,.62);
+      white-space:nowrap;
+      height: fit-content;
+    }
+
+    /* ギャラリー（画像並び） */
+    .gallery{
+      display:grid;
+      gap:10px;
+      grid-template-columns: repeat(2, 1fr);
+      margin-top:12px;
+    }
+    @media (min-width:860px){
+      .gallery{ grid-template-columns: repeat(3, 1fr); }
+    }
+    .gimg{
+      width:100%;
+      aspect-ratio: 4 / 3;
+      object-fit:cover;
+      border-radius:16px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.55);
+      display:block;
+    }
+
+    /* 動画埋め込み（YouTube） */
+    .video{
+      margin-top:12px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.55);
+    }
+    .video iframe{
+      width:100%;
+      aspect-ratio: 16 / 9;
+      border:0;
+      display:block;
+    }
+
+    /* フッター */
+    footer{
+      margin-top:18px;
+      padding:16px 8px 0;
+      color: rgba(0,0,0,.55);
+      font-size:13px;
+      text-align:center;
+    }
+    /* ▲▲ 追加ここまで ▲▲ */
+
     @media (max-width:560px){
       .hero{ height:240px; }
       .name{ font-size:34px; }
@@ -162,7 +244,6 @@
   <div class="wrap">
 
     <section class="panel">
-      <!-- 画像ファイル名は repo に置いたものに合わせてね（例: hero.jpg） -->
       <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
 
       <div class="inner">
@@ -177,22 +258,167 @@
 
         <div class="divider"></div>
 
-        <!-- ▼▼ ここにURLを入れる ▼▼ -->
         <div class="links">
           <a class="btn note" href="https://note.com/s_mi_on_0607" target="_blank" rel="noopener">note</a>
-          <a class="btn x"    href="https://x.com/@yamazaki0173" target="_blank" rel="noopener">X</a>
+          <a class="btn x"    href="https://x.com/yamazaki0173" target="_blank" rel="noopener">X</a>
           <a class="btn ig"   href="https://www.instagram.com/k_yama_sou" target="_blank" rel="noopener">Instagram</a>
-          <a class="btn tt"   href="http://www.tiktok.com/@souta.yamazaki" target="_blank" rel="noopener">TikTok</a>
+          <a class="btn tt"   href="https://www.tiktok.com/@souta.yamazaki" target="_blank" rel="noopener">TikTok</a>
         </div>
-        <!-- ▲▲ ここにURLを入れる ▲▲ -->
       </div>
     </section>
 
-    <!-- 下は明日以降の“縦スクロールの続き”置き場（今は仮） -->
-    <section class="below">
-      <div class="h2">この場所について</div>
-      <p class="p">ゆっくり育てます。焦らず、でも止まらず。</p>
-    </section>
+    <!-- ▼▼ ここから：縦スクロールで増えていくセクション ▼▼ -->
+    <div class="stack">
+
+      <!-- 1) About -->
+      <section class="below" id="about">
+        <div class="kicker">ABOUT</div>
+        <div class="h2">この場所について</div>
+        <p class="p">
+          余白の部屋は、急がないための“部屋”。<br>
+          10点でいい。今日の1ミリを、ちゃんと前に出す。
+        </p>
+      </section>
+
+      <!-- 2) Works / Services -->
+      <section class="below" id="works">
+        <div class="kicker">WORKS</div>
+        <div class="h2">できること</div>
+        <div class="cards">
+          <div class="row">
+            <div>
+              <div class="title">本づくり（InDesign）</div>
+              <div class="desc">装丁・組版・問い・余白。</div>
+            </div>
+            <div class="tag">Book</div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="title">文章（note）</div>
+              <div class="desc">日々の光を拾って、言葉にする。</div>
+            </div>
+            <div class="tag">Write</div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="title">ビジュアル（Illustrator）</div>
+              <div class="desc">問いの言葉、静かなデザイン。</div>
+            </div>
+            <div class="tag">Design</div>
+          </div>
+
+          <div class="row">
+            <div>
+              <div class="title">音楽（BGM / Songs）</div>
+              <div class="desc">気分が整う、流れる時間。</div>
+            </div>
+            <div class="tag">Music</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3) Latest -->
+      <section class="below" id="latest">
+        <div class="kicker">LATEST</div>
+        <div class="h2">いまの更新</div>
+        <div class="cards">
+          <div class="row">
+            <div>
+              <div class="title">余白の部屋、開設</div>
+              <div class="desc">2026-02-04</div>
+            </div>
+            <div class="tag">New</div>
+          </div>
+          <div class="row">
+            <div>
+              <div class="title">リンクを整える</div>
+              <div class="desc">note / SNS / 作品ページ</div>
+            </div>
+            <div class="tag">Next</div>
+          </div>
+          <div class="row">
+            <div>
+              <div class="title">ギャラリーを増やす</div>
+              <div class="desc">表紙・問い投稿・BGM</div>
+            </div>
+            <div class="tag">Plan</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) Gallery -->
+      <section class="below" id="gallery">
+        <div class="kicker">GALLERY</div>
+        <div class="h2">作品</div>
+        <p class="p">画像はあとで差し替えればOK。今は仮で hero.jpg を使っています。</p>
+
+        <div class="gallery" aria-label="works gallery">
+          <img class="gimg" src="hero.jpg" alt="作品1">
+          <img class="gimg" src="hero.jpg" alt="作品2">
+          <img class="gimg" src="hero.jpg" alt="作品3">
+        </div>
+
+        <div class="video" aria-label="YouTube video">
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO_ID"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+      </section>
+
+      <!-- 5) Links -->
+      <section class="below" id="links">
+        <div class="kicker">LINKS</div>
+        <div class="h2">リンク集</div>
+        <div class="cards">
+          <div class="row">
+            <div>
+              <div class="title">note</div>
+              <div class="desc">文章の入口</div>
+            </div>
+            <div class="tag">Go</div>
+          </div>
+          <div class="row">
+            <div>
+              <div class="title">BOOTH（仮）</div>
+              <div class="desc">本・ZINE・データ販売</div>
+            </div>
+            <div class="tag">Soon</div>
+          </div>
+          <div class="row">
+            <div>
+              <div class="title">Kindle（仮）</div>
+              <div class="desc">電子書籍</div>
+            </div>
+            <div class="tag">Soon</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6) Contact -->
+      <section class="below" id="contact">
+        <div class="kicker">CONTACT</div>
+        <div class="h2">連絡先</div>
+        <p class="p">
+          まずはフォーム導線が安心（スパムが来にくい）。メールはあとからでも大丈夫。
+        </p>
+
+        <div class="links" style="margin-top:14px;">
+          <a class="btn note" href="mailto:yourmail@example.com">メールする（仮）</a>
+          <a class="btn" href="https://forms.gle/XXXX" target="_blank" rel="noopener">フォーム（仮）</a>
+        </div>
+      </section>
+
+      <footer>
+        <div>© yohaku-room</div>
+        <div>ゆっくり育てます。焦らず、でも止まらず。</div>
+      </footer>
+
+    </div>
+    <!-- ▲▲ ここまで：縦スクロールセクション ▲▲ -->
 
   </div>
 </body>
