@@ -88,6 +88,36 @@
       margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
       color:var(--sub); font-size:13px;
     }
+    /* SNSボタン色（上品ver：枠＋うっすら背景） */
+　　　.btn.sns-note{
+  　　border-color: rgba(255,255,255,.20);
+  　　background: rgba(255,255,255,.10);
+　　　}
+
+　　　.btn.sns-x{
+  　　　border-color: rgba(255,255,255,.20);
+  　　　background: rgba(255,255,255,.06);
+　　　　}
+
+　　　.btn.sns-instagram{
+  　　border-color: rgba(225,48,108,.55);
+  　　background: rgba(225,48,108,.12);
+　　　}
+
+　　　.btn.sns-tiktok{
+  　　border-color: rgba(37,244,238,.55);
+  　　background: rgba(37,244,238,.10);
+　　　}
+
+　　　/* ふわっと光らせる（任意だけど気持ちいい） */
+　　　.btn.sns-instagram:hover,
+　　　.btn.sns-tiktok:hover{
+  　　filter: brightness(1.05);
+　　　}
+    .btn.sns-instagram{
+ 　　 border-color: rgba(255,255,255,.18);
+  　　background: linear-gradient(135deg, rgba(245,133,41,.22), rgba(221,42,123,.22), rgba(129,52,175,.22));
+　　　}
   </style>
 </head>
 <body>
@@ -103,10 +133,10 @@
         ここは“自分のペース”を守るための、ちいさな拠点です。
       </p>
       <div class="cta-row">
-        <a class="btn primary" href="#" target="_blank" rel="noopener">note（あとでURL差し替え）</a>
-        <a class="btn" href="#" target="_blank" rel="noopener">X（あとでURL差し替え）</a>
-        <a class="btn" href="#" target="_blank" rel="noopener">Instagram（あとでURL差し替え）</a>
-        <a class="btn" href="#" target="_blank" rel="noopener">TikTok（あとでURL差し替え）</a>
+        <a class="btn primary sns-note" href="#" target="_blank" rel="noopener">note（あとでURL差し替え）</a>
+　　　　　<a class="btn sns-x" href="#" target="_blank" rel="noopener">X（あとでURL差し替え）</a>
+　　　　　<a class="btn sns-instagram" href="#" target="_blank" rel="noopener">Instagram（あとでURL差し替え）</a>
+　　　　　<a class="btn sns-tiktok" href="#" target="_blank" rel="noopener">TikTok（あとでURL差し替え）</a>
       </div>
     </header>
 
