@@ -7,14 +7,14 @@
   <meta name="description" content="余白の部屋。言葉とデザインと音楽の作業場。" />
   <style>
     :root{
-  --bg:#0b0f14;
-  --card:rgba(255,255,255,.06);
-  --text:#f5f7fb;
-  --sub:rgba(245,247,251,.72);
-  --line:rgba(255,255,255,.12);
-  --accent:#f5f7fb;
-  --radius:18px;
-  }
+      --bg:#0b0f14;
+      --card:rgba(255,255,255,.06);
+      --text:#f5f7fb;
+      --sub:rgba(245,247,251,.72);
+      --line:rgba(255,255,255,.12);
+      --accent:#f5f7fb;
+      --radius:18px;
+    }
     *{box-sizing:border-box;}
     body{
       margin:0;
@@ -30,44 +30,13 @@
       border-bottom:1px solid var(--line);
     }
     .badge{
-      display:inline-block; padding:6px 10px; border:1px solid var(--line);
-      border-radius:999px; font-size:12px; color:var(--sub); background:#fff;
-    }
-    <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
-    h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
-    .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
-    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid var(--line); background:#fff;
-      font-size:14px;
-    }
-    .btn.primary{background:var(--accent); color:#fff; border-color:var(--accent);}
-    .grid{display:grid; gap:14px; margin-top:26px;}
-    @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
-
-    .card{
-      background:var(--card); border:1px solid var(--line);
-      border-radius:var(--radius); padding:18px;
-    }
-    .card h2{margin:0 0 8px; font-size:18px;}
-    .muted{color:var(--sub); font-size:14px; margin:0;}
-    .list{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px;}
-    .item{
-      border:1px solid var(--line); border-radius:14px; padding:12px 12px;
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      background:#fff;
-    }
-    .item span{color:var(--sub); font-size:13px;}
-    .pill{
-      font-size:12px; padding:6px 10px; border-radius:999px;
-      border:1px solid var(--line); color:var(--sub); white-space:nowrap;
-    }
-    section{margin-top:18px;}
-    footer{
-      margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
-      color:var(--sub); font-size:13px;
+      display:inline-block;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      font-size:12px;
+      color:var(--sub);
+      background:transparent;
     }
     .hero{
       width:100%;
@@ -76,6 +45,44 @@
       border-radius:18px;
       border:1px solid var(--line);
       margin:18px 0 16px;
+      display:block;
+    }
+    h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
+    .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid var(--line); background:var(--card);
+      font-size:14px;
+    }
+    .btn.primary{background:var(--accent); color:#0b0f14; border-color:var(--accent);}
+    .grid{display:grid; gap:14px; margin-top:26px;}
+    @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
+
+    .card{
+      background:var(--card); border:1px solid var(--line);
+      border-radius:var(--radius); padding:18px;
+      backdrop-filter: blur(6px);
+    }
+    .card h2{margin:0 0 8px; font-size:18px;}
+    .muted{color:var(--sub); font-size:14px; margin:0;}
+    .list{margin:12px 0 0; padding:0; list-style:none; display:grid; gap:10px;}
+    .item{
+      border:1px solid var(--line); border-radius:14px; padding:12px 12px;
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      background:rgba(255,255,255,.04);
+    }
+    .item span{color:var(--sub); font-size:13px;}
+    .pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line); color:var(--sub); white-space:nowrap;
+      background:rgba(255,255,255,.03);
+    }
+    section{margin-top:18px;}
+    footer{
+      margin-top:38px; padding-top:18px; border-top:1px solid var(--line);
+      color:var(--sub); font-size:13px;
     }
   </style>
 </head>
@@ -83,6 +90,10 @@
   <div class="wrap">
     <header>
       <div class="badge">yohaku-room / 余白の部屋</div>
+
+      <!-- 画像はCSSじゃなくて、ここ（HTML）に置く -->
+      <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
+
       <h1>余白の部屋。</h1>
       <p class="lead">
         文章、デザイン、音楽。静かに作って、少しずつ公開していく場所。
