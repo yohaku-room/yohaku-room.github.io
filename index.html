@@ -20,7 +20,7 @@
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
       color:var(--text);
-      background:var(--bg);
+      background: linear-gradient(180deg, #ffd6a5 0%, #ff9aa2 35%, #b5bdfb 70%, #dbeafe 100%);
       line-height:1.8;
     }
     a{color:inherit; text-decoration:none;}
@@ -54,31 +54,35 @@
     h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
     .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
     .cta-row{
-  　　display:grid;
-  　　grid-template-columns: repeat(2, minmax(0, 1fr));
-  　　gap:10px;
-  　　margin-top:18px;
-　　}
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:18px;
+　}
 　　@media(min-width:720px){
   　.cta-row{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
 　　}
     .btn{
-  display:flex;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:100%;
-  padding:10px 14px;
+  padding:9px 14px;     /* ちょい小さく */
   border-radius:999px;
   border:1px solid var(--line);
-  background:rgba(255,255,255,.06);
-  font-size:14px;
-  white-space:nowrap;   /* 文字が折れて崩れるの防止 */
+  background:rgba(255,255,255,.10);
+  font-size:13px;       /* ちょい小さく */
+  line-height:1;
+  white-space:nowrap;
 }
 .btn.primary{
-  background:var(--accent);
+  background:#fff;
   color:#0b0f14;
-  border-color:var(--accent);
+  border-color:#fff;
 }
+    .btn.sns-tiktok{
+  　　border-color: rgba(255,215,0,.70) !important;
+  　　background: rgba(255,215,0,.14) !important;
+　　　}
     .grid{display:grid; gap:14px; margin-top:26px;}
     @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
 
@@ -162,23 +166,23 @@
 
       <img class="hero" src="hero.jpg" alt="余白の部屋の風景">
 
-      <h1>余白の部屋。</h1>
+      <h1>やまざき想太 余白の部屋。</h1>
       <p class="lead">
-        文章、デザイン、音楽。静かに作って、少しずつ公開していく場所。
-        ここは“自分のペース”を守るための、ちいさな拠点です。
+        生きることは、楽しむこと。<br>
+        文章、デザイン、音楽。静かな創作の世界へようこそ。
       </p>
       <div class="cta-row">
-        <a class="btn primary sns-note" href="#" target="_blank" rel="noopener">note（あとでURL差し替え）</a>
+        <a class="btn primary sns-note" href="https://note.com/s_mi_on_0607" target="_blank" rel="noopener">note</a>
 　　　　　<a class="btn sns-x" href="#" target="_blank" rel="noopener">X（あとでURL差し替え）</a>
-　　　　　<a class="btn sns-instagram" href="#" target="_blank" rel="noopener">Instagram（あとでURL差し替え）</a>
-　　　　　<a class="btn sns-tiktok" href="#" target="_blank" rel="noopener">TikTok（あとでURL差し替え）</a>
+　　　　　<a class="btn sns-instagram" href="https://www.instagram.com/k_yama_sou?igsh=MTV1M3luOTA2eHppOA%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+　　　　　<a class="btn sns-tiktok" href="http://www.tiktok.com/@souta.yamazaki" target="_blank" rel="noopener">TikTok</a>
       </div>
     </header>
 
     <div class="grid">
       <section class="card">
-        <h2>やっていること</h2>
-        <p class="muted">いまの想太の“手触り”を、そのまま置いていく。</p>
+        <h2>ぼくの創作</h2>
+        <p class="muted">やりたいこと、ただ、楽しむだけ</p>
         <ul class="list">
           <li class="item">
             <div>
@@ -189,7 +193,7 @@
           </li>
           <li class="item">
             <div>
-              <strong>note（文章）</strong><br>
+              <strong>文章作成（ライティング）</strong><br>
               <span>日々の光を拾って、言葉にする。</span>
             </div>
             <div class="pill">Write</div>
@@ -204,14 +208,14 @@
           <li class="item">
             <div>
               <strong>動画編集（Premiere）</strong><br>
-              <span>動く余白、続ける記録。</span>
+              <span>心が動く、映像作品を。</span>
             </div>
             <div class="pill">Video</div>
           </li>
           <li class="item">
             <div>
               <strong>個人LP（GitHub）</strong><br>
-              <span>ここを“母艦”にする。</span>
+              <span>ここは僕の静かな“居場所”</span>
             </div>
             <div class="pill">Web</div>
           </li>
@@ -221,9 +225,8 @@
       <section class="card">
         <h2>プロフィール</h2>
         <p class="muted">
-          想太。編集／エッセイ／コピー／デザイン。<br>
-          “楽しい”を取り戻す途中。
-        </p>
+          やまざき想太。<br>
+          言葉が好き／編集者／作家／作詞家／宗教3世／出版チーム『余白者』所属</p>
 
         <section style="margin-top:14px;">
           <h2 style="margin:0 0 8px; font-size:18px;">いまの更新</h2>
