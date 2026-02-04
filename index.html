@@ -53,14 +53,32 @@
 
     h1{margin:14px 0 8px; font-size:42px; letter-spacing:-0.02em;}
     .lead{max-width:60ch; color:var(--sub); margin:0 0 18px;}
-    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+    .cta-row{
+  　　display:grid;
+  　　grid-template-columns: repeat(2, minmax(0, 1fr));
+  　　gap:10px;
+  　　margin-top:18px;
+　　}
+　　@media(min-width:720px){
+  　.cta-row{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+　　}
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid var(--line); background:var(--card);
-      font-size:14px;
-    }
-    .btn.primary{background:var(--accent); color:#0b0f14; border-color:var(--accent);}
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.06);
+  font-size:14px;
+  white-space:nowrap;   /* 文字が折れて崩れるの防止 */
+}
+.btn.primary{
+  background:var(--accent);
+  color:#0b0f14;
+  border-color:var(--accent);
+}
     .grid{display:grid; gap:14px; margin-top:26px;}
     @media(min-width:820px){ .grid{grid-template-columns: 1.15fr .85fr;} }
 
@@ -118,6 +136,23 @@
  　　 border-color: rgba(255,255,255,.18);
   　　background: linear-gradient(135deg, rgba(245,133,41,.22), rgba(221,42,123,.22), rgba(129,52,175,.22));
 　　　}
+    /* SNS色（強制反映ver） */
+.btn.sns-note{
+  border-color: rgba(255,255,255,.22) !important;
+  background: rgba(255,255,255,.10) !important;
+}
+.btn.sns-x{
+  border-color: rgba(255,255,255,.18) !important;
+  background: rgba(255,255,255,.06) !important;
+}
+.btn.sns-instagram{
+  border-color: rgba(225,48,108,.60) !important;
+  background: rgba(225,48,108,.14) !important;
+}
+.btn.sns-tiktok{
+  border-color: rgba(37,244,238,.60) !important;
+  background: rgba(37,244,238,.12) !important;
+}
   </style>
 </head>
 <body>
