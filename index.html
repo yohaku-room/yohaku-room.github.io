@@ -30,19 +30,22 @@
 }
     *{box-sizing:border-box;}
     body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
-      color:var(--text);
-      line-height:1.9;
-      min-height:100svh;
-      /* 背景（夕焼け系） */
-      background: linear-gradient(180deg, #f6d6b4 0%, #f5a6a5 45%, #b7bdf6 100%);
+     margin:0;
+     font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+     color:var(--text);
+     line-height:1.9;
+     min-height:100svh;
+
+     background: linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 45%, var(--bg-c) 100%);
+     transition: background .35s ease;
+     position: relative; /* 任意だけど安心 */
     }
 
     /* 背景にほんのり霞感 */
     body:before{
       content:"";
       position:fixed; inset:0;
+      z-index:-1;
       background: radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,.35), rgba(255,255,255,0)),
                   radial-gradient(900px 600px at 20% 110%, rgba(255,255,255,.25), rgba(255,255,255,0));
       pointer-events:none;
@@ -200,6 +203,15 @@
       white-space:nowrap;
       height: fit-content;
     }
+    body.theme-dusk .row{
+     background: rgba(255,255,255,.08);
+     border-color: rgba(255,255,255,.18);
+    }
+
+    body.theme-dusk .row .desc,
+    body.theme-dusk .tag{
+    color: rgba(255,255,255,.70);
+    }
 
     /* ギャラリー（画像並び） */
     .gallery{
@@ -262,12 +274,6 @@
 .reveal.is-in{
   opacity:1;
   transform: translateY(0);
-}
-
-/* ===== Theme toggle (light/dusk) ===== */
-body{
-  background: linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 45%, var(--bg-c) 100%);
-  transition: background .35s ease;
 }
 
 /* 夜（dusk）テーマ */
@@ -351,6 +357,9 @@ body.theme-dusk .btn{
 body.theme-dusk .btn.note{
   background: rgba(255,255,255,.92);
   color:#111;
+}
+body.theme-dusk .row .title{
+  color: rgba(255,255,255,.88);
 }
     
   </style>
@@ -442,7 +451,7 @@ body.theme-dusk .btn.note{
           <div class="row">
             <div>
               <div class="title">余白の部屋、開設</div>
-              <div class="desc">2026-02-04</div>
+              <div class="desc" id="today"></div>
             </div>
             <div class="tag">New</div>
           </div>
@@ -550,51 +559,11 @@ const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if(e.isIntersecting){
       e.target.classList.add('is-in');
-      io.unobserve(e.target); // 一度出たら固定（軽い）
-    }
-  });
-},{ threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
-
-targets.forEach(t => io.observe(t));
-
-/* ===== 2) Latest: 今日の日付を自動挿入（任意） =====
-   使いたい場合は、Latest内のどこかに
-   <span id="today"></span>
-   を入れてね。
-*/
-const todayEl = document.getElementById('today');
-if(todayEl){
-  const d = new Date();
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const dd = String(d.getDate()).padStart(2,'0');
-  todayEl.textContent = `${yyyy}-${mm}-${dd}`;
-}
-
-/* ===== 3) Theme toggle (保存つき) ===== */
-const btn = document.querySelector('.theme-toggle');
-const saved = localStorage.getItem('yohaku-theme');
-if(saved === 'dusk') document.body.classList.add('theme-dusk');
-
-btn?.addEventListener('click', () => {
-  document.body.classList.toggle('theme-dusk');
-  localStorage.setItem('yohaku-theme',
-    document.body.classList.contains('theme-dusk') ? 'dusk' : 'light'
-  );
-});
-
-/* ===== 4) Gallery lightbox ===== */
-<script>
-/* ===== 1) Scroll reveal ===== */
-const targets = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      e.target.classList.add('is-in');
       io.unobserve(e.target);
     }
   });
 },{ threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
 targets.forEach(t => io.observe(t));
 
 /* ===== 2) Latest: 今日の日付（任意） ===== */
@@ -608,13 +577,14 @@ if(todayEl){
 }
 
 /* ===== 3) Theme toggle (保存つき) ===== */
-const btn = document.querySelector('.theme-toggle');
+const themeBtn = document.querySelector('.theme-toggle');
 const saved = localStorage.getItem('yohaku-theme');
 if(saved === 'dusk') document.body.classList.add('theme-dusk');
 
-btn?.addEventListener('click', () => {
+themeBtn?.addEventListener('click', () => {
   document.body.classList.toggle('theme-dusk');
-  localStorage.setItem('yohaku-theme',
+  localStorage.setItem(
+    'yohaku-theme',
     document.body.classList.contains('theme-dusk') ? 'dusk' : 'light'
   );
 });
@@ -627,7 +597,7 @@ const lbImg = lb?.querySelector('img');
 let currentIndex = -1;
 
 function openAt(i){
-  if(!lb || !lbImg) return;
+  if(!lb || !lbImg || imgs.length === 0) return;
   currentIndex = (i + imgs.length) % imgs.length;
   lbImg.src = imgs[currentIndex].src;
   lb.classList.add('is-open');
@@ -642,15 +612,8 @@ function closeLb(){
   currentIndex = -1;
 }
 
-function next(){
-  if(currentIndex < 0) return;
-  openAt(currentIndex + 1);
-}
-
-function prev(){
-  if(currentIndex < 0) return;
-  openAt(currentIndex - 1);
-}
+function next(){ if(currentIndex >= 0) openAt(currentIndex + 1); }
+function prev(){ if(currentIndex >= 0) openAt(currentIndex - 1); }
 
 /* click open */
 imgs.forEach((img, i) => {
@@ -658,7 +621,7 @@ imgs.forEach((img, i) => {
   img.addEventListener('click', () => openAt(i));
 });
 
-/* click backdrop to close (but not image click) */
+/* click backdrop to close */
 lb?.addEventListener('click', (e) => {
   if(e.target === lb) closeLb();
 });
@@ -684,10 +647,6 @@ lbImg?.addEventListener('touchstart', (e) => {
   dragging = true;
 }, {passive:true});
 
-lbImg?.addEventListener('touchmove', (e) => {
-  if(!dragging) return;
-}, {passive:true});
-
 lbImg?.addEventListener('touchend', (e) => {
   if(!dragging) return;
   dragging = false;
@@ -696,7 +655,6 @@ lbImg?.addEventListener('touchend', (e) => {
   const dx = t.clientX - startX;
   const dy = t.clientY - startY;
 
-  // 横スワイプを優先（縦スクロールの誤判定を避ける）
   if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){
     if(dx < 0) next();
     else prev();
