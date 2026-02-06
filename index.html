@@ -238,6 +238,88 @@
       .name{ font-size:34px; }
       .btn{ min-width: 46%; } /* スマホは2列で整列 */
     }
+
+    /* ===== Motion (scroll reveal) ===== */
+.reveal{
+  opacity:0;
+  transform: translateY(10px);
+  transition: opacity .55s ease, transform .55s ease;
+  will-change: opacity, transform;
+}
+.reveal.is-in{
+  opacity:1;
+  transform: translateY(0);
+}
+
+/* ===== Theme toggle (light/dusk) ===== */
+:root{
+  --bg-a:#f6d6b4;
+  --bg-b:#f5a6a5;
+  --bg-c:#b7bdf6;
+}
+body{
+  background: linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 45%, var(--bg-c) 100%);
+  transition: background .35s ease;
+}
+
+/* 夜（dusk）テーマ */
+body.theme-dusk{
+  --bg-a:#0b1020;
+  --bg-b:#1b2a55;
+  --bg-c:#6b3fa0;
+}
+
+/* ボタン：テーマ切替 */
+.theme-toggle{
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 50;
+  border:1px solid rgba(0,0,0,.14);
+  background: rgba(255,255,255,.75);
+  border-radius: 999px;
+  padding:10px 14px;
+  font-size:14px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+body.theme-dusk .theme-toggle{
+  background: rgba(255,255,255,.20);
+  border-color: rgba(255,255,255,.25);
+  color: rgba(255,255,255,.92);
+}
+
+/* ===== Gallery hover ===== */
+.gimg{
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.gimg:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.14);
+}
+
+/* ===== Lightbox (クリック拡大) ===== */
+.lightbox{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding: 18px;
+  z-index: 100;
+}
+.lightbox.is-open{ display:flex; }
+.lightbox img{
+  max-width: min(980px, 96vw);
+  max-height: 86vh;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 24px 80px rgba(0,0,0,.35);
+}
+
+    
   </style>
 </head>
 <body>
@@ -271,7 +353,7 @@
     <div class="stack">
 
       <!-- 1) About -->
-      <section class="below" id="about">
+      <section class="below reveal" id="about">
         <div class="kicker">ABOUT</div>
         <div class="h2">この場所について</div>
         <p class="p">
@@ -281,7 +363,7 @@
       </section>
 
       <!-- 2) Works / Services -->
-      <section class="below" id="works">
+      <section class="below reveal" id="works">
         <div class="kicker">WORKS</div>
         <div class="h2">できること</div>
         <div class="cards">
@@ -320,7 +402,7 @@
       </section>
 
       <!-- 3) Latest -->
-      <section class="below" id="latest">
+      <section class="below reveal" id="latest">
         <div class="kicker">LATEST</div>
         <div class="h2">いまの更新</div>
         <div class="cards">
@@ -349,7 +431,7 @@
       </section>
 
       <!-- 4) Gallery -->
-      <section class="below" id="gallery">
+      <section class="below reveal" id="gallery">
         <div class="kicker">GALLERY</div>
         <div class="h2">作品</div>
         <p class="p">画像はあとで差し替えればOK。今は仮で hero.jpg を使っています。</p>
@@ -370,7 +452,7 @@
       </section>
 
       <!-- 5) Links -->
-      <section class="below" id="links">
+      <section class="below reveal" id="links">
         <div class="kicker">LINKS</div>
         <div class="h2">リンク集</div>
         <div class="cards">
@@ -399,7 +481,7 @@
       </section>
 
       <!-- 6) Contact -->
-      <section class="below" id="contact">
+      <section class="below reveal" id="contact">
         <div class="kicker">CONTACT</div>
         <div class="h2">連絡先</div>
         <p class="p">
@@ -421,5 +503,78 @@
     <!-- ▲▲ ここまで：縦スクロールセクション ▲▲ -->
 
   </div>
+
+  <button class="theme-toggle" type="button" aria-label="テーマ切替">🌗 Theme</button>
+
+<div class="lightbox" aria-hidden="true">
+  <img src="" alt="拡大画像">
+</div>
+
+<script>
+/* ===== 1) Scroll reveal ===== */
+const targets = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('is-in');
+      io.unobserve(e.target); // 一度出たら固定（軽い）
+    }
+  });
+},{ threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+
+targets.forEach(t => io.observe(t));
+
+/* ===== 2) Latest: 今日の日付を自動挿入（任意） =====
+   使いたい場合は、Latest内のどこかに
+   <span id="today"></span>
+   を入れてね。
+*/
+const todayEl = document.getElementById('today');
+if(todayEl){
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  todayEl.textContent = `${yyyy}-${mm}-${dd}`;
+}
+
+/* ===== 3) Theme toggle (保存つき) ===== */
+const btn = document.querySelector('.theme-toggle');
+const saved = localStorage.getItem('yohaku-theme');
+if(saved === 'dusk') document.body.classList.add('theme-dusk');
+
+btn?.addEventListener('click', () => {
+  document.body.classList.toggle('theme-dusk');
+  localStorage.setItem('yohaku-theme',
+    document.body.classList.contains('theme-dusk') ? 'dusk' : 'light'
+  );
+});
+
+/* ===== 4) Gallery lightbox ===== */
+const lb = document.querySelector('.lightbox');
+const lbImg = lb?.querySelector('img');
+document.querySelectorAll('.gimg').forEach(img => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => {
+    if(!lb || !lbImg) return;
+    lbImg.src = img.src;
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden','false');
+  });
+});
+
+lb?.addEventListener('click', () => {
+  lb.classList.remove('is-open');
+  lb.setAttribute('aria-hidden','true');
+  if(lbImg) lbImg.src = '';
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    lb?.classList.remove('is-open');
+    lb?.setAttribute('aria-hidden','true');
+    if(lbImg) lbImg.src = '';
+  }
+});
+</script>  
 </body>
 </html>
