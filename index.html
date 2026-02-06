@@ -7,14 +7,27 @@
   <meta name="description" content="余白の部屋。言葉とデザインと音楽の作業場。" />
   <style>
     :root{
-      --text:#1a1a1a;
-      --sub:rgba(0,0,0,.55);
-      --line:rgba(0,0,0,.10);
-      --paper:rgba(255,255,255,.78);
-      --paper-strong:rgba(255,255,255,.88);
-      --shadow: 0 18px 60px rgba(0,0,0,.10);
-      --radius:22px;
-    }
+  /* ===== Base colors ===== */
+  --text:#1a1a1a;
+  --sub:rgba(0,0,0,.55);
+  --line:rgba(0,0,0,.10);
+
+  /* ===== Paper / panel ===== */
+  --paper:rgba(255,255,255,.78);
+  --paper-strong:rgba(255,255,255,.88);
+  --shadow: 0 18px 60px rgba(0,0,0,.10);
+  --radius:22px;
+
+  /* ===== Theme gradient (light) ===== */
+  --bg-a:#f6d6b4;
+  --bg-b:#f5a6a5;
+  --bg-c:#b7bdf6;
+
+  /* ===== Dynamic panel colors ===== */
+  --panel-bg: rgba(255,255,255,.78);
+  --below-bg: rgba(255,255,255,.45);
+  --border: rgba(255,255,255,.55);
+}
     *{box-sizing:border-box;}
     body{
       margin:0;
@@ -40,13 +53,13 @@
 
     /* 名刺みたいな“面” */
     .panel{
-      background: var(--paper);
-      border: 1px solid rgba(255,255,255,.55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
+     background: var(--panel-bg);
+     border: 1px solid var(--border);
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     border-radius: var(--radius);
+     box-shadow: var(--shadow);
+     overflow:hidden;
     }
 
     /* ヒーロー画像 */
@@ -133,14 +146,14 @@
 
     /* 下に“縦スクロールの続き” */
     .below{
-      margin-top:18px;
-      padding:18px;
-      background: rgba(255,255,255,.45);
-      border:1px solid rgba(255,255,255,.55);
-      border-radius: var(--radius);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 14px 50px rgba(0,0,0,.08);
+     margin-top:18px;
+     padding:18px;
+     background: var(--below-bg);
+     border:1px solid var(--border);
+     border-radius: var(--radius);
+     backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+     box-shadow: 0 14px 50px rgba(0,0,0,.08);
     }
 
     .h2{
@@ -242,8 +255,8 @@
     /* ===== Motion (scroll reveal) ===== */
 .reveal{
   opacity:0;
-  transform: translateY(10px);
-  transition: opacity .55s ease, transform .55s ease;
+  transform: translateY(14px);
+  transition: opacity .42s ease, transform .42s cubic-bezier(.2,.8,.2,1);
   will-change: opacity, transform;
 }
 .reveal.is-in{
@@ -252,11 +265,6 @@
 }
 
 /* ===== Theme toggle (light/dusk) ===== */
-:root{
-  --bg-a:#f6d6b4;
-  --bg-b:#f5a6a5;
-  --bg-c:#b7bdf6;
-}
 body{
   background: linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 45%, var(--bg-c) 100%);
   transition: background .35s ease;
@@ -318,7 +326,32 @@ body.theme-dusk .theme-toggle{
   border: 1px solid rgba(255,255,255,.25);
   box-shadow: 0 24px 80px rgba(0,0,0,.35);
 }
+/* ===== Night theme tuning ===== */
+body.theme-dusk{
+  color: rgba(255,255,255,.92);
+}
 
+body.theme-dusk .sub{ color: rgba(255,255,255,.70); }
+body.theme-dusk .p{ color: rgba(255,255,255,.70); }
+body.theme-dusk .h2{ color: rgba(255,255,255,.86); }
+body.theme-dusk .divider{ background: rgba(255,255,255,.18); }
+
+body.theme-dusk{
+  --panel-bg: rgba(0,0,0,.22);
+  --below-bg: rgba(0,0,0,.16);
+  --border: rgba(255,255,255,.20);
+}
+
+/* ボタンも夜に馴染ませる（必要なら） */
+body.theme-dusk .btn{
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.92);
+}
+body.theme-dusk .btn.note{
+  background: rgba(255,255,255,.92);
+  color:#111;
+}
     
   </style>
 </head>
@@ -551,30 +584,124 @@ btn?.addEventListener('click', () => {
 });
 
 /* ===== 4) Gallery lightbox ===== */
-const lb = document.querySelector('.lightbox');
-const lbImg = lb?.querySelector('img');
-document.querySelectorAll('.gimg').forEach(img => {
-  img.style.cursor = 'zoom-in';
-  img.addEventListener('click', () => {
-    if(!lb || !lbImg) return;
-    lbImg.src = img.src;
-    lb.classList.add('is-open');
-    lb.setAttribute('aria-hidden','false');
+<script>
+/* ===== 1) Scroll reveal ===== */
+const targets = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('is-in');
+      io.unobserve(e.target);
+    }
   });
+},{ threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+targets.forEach(t => io.observe(t));
+
+/* ===== 2) Latest: 今日の日付（任意） ===== */
+const todayEl = document.getElementById('today');
+if(todayEl){
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  todayEl.textContent = `${yyyy}-${mm}-${dd}`;
+}
+
+/* ===== 3) Theme toggle (保存つき) ===== */
+const btn = document.querySelector('.theme-toggle');
+const saved = localStorage.getItem('yohaku-theme');
+if(saved === 'dusk') document.body.classList.add('theme-dusk');
+
+btn?.addEventListener('click', () => {
+  document.body.classList.toggle('theme-dusk');
+  localStorage.setItem('yohaku-theme',
+    document.body.classList.contains('theme-dusk') ? 'dusk' : 'light'
+  );
 });
 
-lb?.addEventListener('click', () => {
+/* ===== 4) Gallery lightbox + swipe ===== */
+const imgs = Array.from(document.querySelectorAll('.gimg'));
+const lb = document.querySelector('.lightbox');
+const lbImg = lb?.querySelector('img');
+
+let currentIndex = -1;
+
+function openAt(i){
+  if(!lb || !lbImg) return;
+  currentIndex = (i + imgs.length) % imgs.length;
+  lbImg.src = imgs[currentIndex].src;
+  lb.classList.add('is-open');
+  lb.setAttribute('aria-hidden','false');
+}
+
+function closeLb(){
+  if(!lb || !lbImg) return;
   lb.classList.remove('is-open');
   lb.setAttribute('aria-hidden','true');
-  if(lbImg) lbImg.src = '';
+  lbImg.src = '';
+  currentIndex = -1;
+}
+
+function next(){
+  if(currentIndex < 0) return;
+  openAt(currentIndex + 1);
+}
+
+function prev(){
+  if(currentIndex < 0) return;
+  openAt(currentIndex - 1);
+}
+
+/* click open */
+imgs.forEach((img, i) => {
+  img.style.cursor = 'zoom-in';
+  img.addEventListener('click', () => openAt(i));
 });
+
+/* click backdrop to close (but not image click) */
+lb?.addEventListener('click', (e) => {
+  if(e.target === lb) closeLb();
+});
+
+/* ESC / Arrow keys */
 document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape'){
-    lb?.classList.remove('is-open');
-    lb?.setAttribute('aria-hidden','true');
-    if(lbImg) lbImg.src = '';
-  }
+  if(!lb?.classList.contains('is-open')) return;
+  if(e.key === 'Escape') closeLb();
+  if(e.key === 'ArrowRight') next();
+  if(e.key === 'ArrowLeft') prev();
 });
+
+/* swipe */
+let startX = 0;
+let startY = 0;
+let dragging = false;
+
+lbImg?.addEventListener('touchstart', (e) => {
+  if(!lb?.classList.contains('is-open')) return;
+  const t = e.touches[0];
+  startX = t.clientX;
+  startY = t.clientY;
+  dragging = true;
+}, {passive:true});
+
+lbImg?.addEventListener('touchmove', (e) => {
+  if(!dragging) return;
+}, {passive:true});
+
+lbImg?.addEventListener('touchend', (e) => {
+  if(!dragging) return;
+  dragging = false;
+
+  const t = e.changedTouches[0];
+  const dx = t.clientX - startX;
+  const dy = t.clientY - startY;
+
+  // 横スワイプを優先（縦スクロールの誤判定を避ける）
+  if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)){
+    if(dx < 0) next();
+    else prev();
+  }
+}, {passive:true});
 </script>  
 </body>
 </html>
